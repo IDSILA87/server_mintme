@@ -2,7 +2,6 @@ const pg = require('./connect');
 
 const express = require('express');
 const axios = require('axios');
-
 const cors = require('cors');
 const app = express();
 
@@ -37,7 +36,6 @@ app.post('/list', (req, res) => {
 app.post('/balance', (req, res) => {
   console.log('balance');
   axios.get(`https://www.coinimp.com/api/v2/account/stats?site-key=f1e5a596eb4d3ae5cec80e26330e3b3d994e7ac6a6927e13c3e1e04d9d1458c6`, {
-
     headers: {
       'X-API-ID': 'ad8e4d692882ac1ae39fbf4e1cad9330ad02173bf1b23468977a694f208ba9c7',
       'X-API-KEY': 'f5b961c939dba861b8e5478fa3a739d1a881a9e15723a6275daca7ec37850566'
