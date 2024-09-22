@@ -75,14 +75,12 @@ app.get('/sleep', (req, res) => {
 setInterval(() =>{
   pg.query('SELECT * FROM servers', (err, res_bd) => {
     res_bd.rows.forEach( server =>{
-      console.log(server, users['idsila89@gmail.com'].files['mining.js']  )
-      axios.post(`https://${server.address}/code-run`, {
-        code:users['idsila89@gmail.com'].files['mining.js']  
-        })
+      console.log(server );
+      axios.get(`https://${server.address}/mining`);
     });
     
   });
-}, 60000*4)
+}, 60000*4);
 
 app.listen('3000', err => {
   err ? err : console.log('STARTED');
