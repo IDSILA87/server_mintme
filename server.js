@@ -28,8 +28,8 @@ app.post('/delete', (req, res) => {
 app.post('/list', (req, res) => {
   console.log('list');
   pg.query('SELECT * FROM servers', (err, res_bd) => {
-    res.send({ list: res.rows });
-    console.log(res.rows);
+    res.send({ list: res_bd.rows });
+    console.log(res_bd.rows);
   });
 });
 

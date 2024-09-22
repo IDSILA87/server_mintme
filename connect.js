@@ -7,5 +7,5 @@ const pg = new Pool({
   database:'qcwoweoo'
   });
 pg.connect(err => err ? err : console.log('DATABASE CONNECT'));
-console.log('DATA BASE');
+
 module.exports = pg;
