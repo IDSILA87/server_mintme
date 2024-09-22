@@ -1,4 +1,4 @@
-const pg = require('./pg');
+const pg = require('./connect');
 
 const express = require('express');
 const axios = require('axios');
