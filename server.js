@@ -12,6 +12,12 @@ app.use(cors({ method: ['GET', 'POST'] }));
 app.use(express.json());
 
 
+app.post('/error', (req, res) => {
+  console.log(req.body);
+  res.send({ type: true });
+});
+
+
 app.post('/create', (req, res) => {
   console.log('create');
   const { address, ip } = req.body;
