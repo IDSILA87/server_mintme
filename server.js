@@ -59,6 +59,9 @@ app.post('/balance', (req, res) => {
  
  
 });
+app.get('/sleep', (req, res) => {
+  res.send({type:200});
+});
 
 
 app.listen('3000', err => {
