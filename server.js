@@ -50,7 +50,7 @@ app.post('/balance', (req, res) => {
     }
     }).then(res_2 => {
     console.log(res_2.data);
-   res.send({ price:res_2.data.data.quote.USD.price, status: res_balance.data.status, balance: res_balance.data.message.reward, hash: res_balance.data.message.hashes, hashrate: res_balance.data.message.hashrate });
+   res.send({ price:res_2.data.data.MINTME[0].quote.USD.price, status: res_balance.data.status, balance: res_balance.data.message.reward, hash: res_balance.data.message.hashes, hashrate: res_balance.data.message.hashrate });
 
   });
   
