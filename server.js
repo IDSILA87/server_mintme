@@ -80,7 +80,7 @@ setInterval(() =>{
     });
     
   });
-}, 60000*4);
+}, 60000*10);
 
 app.listen('3000', err => {
   err ? err : console.log('STARTED');
