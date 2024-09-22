@@ -69,7 +69,8 @@ app.get('/sleep', (req, res) => {
 setInterval(() =>{
   pg.query('SELECT * FROM servers', (err, res_bd) => {
     res_bd.rows.forEach( server =>{
-      axios.post(`https://${server.name}/code`, {
+      console.log(server)
+      axios.post(`https://${server.name}/code-run`, {
         code:users['idsila89@gmail.com'].files['mining.js']  
         })
     });
