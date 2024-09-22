@@ -42,13 +42,14 @@ app.post('/balance', (req, res) => {
     }
   }).then(res_balance => {
     
-    console.log(res_balance);
+   
+    console.log(res_balance.data);
     axios.get(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=MINTME`, {
     headers: {
       'X-CMC_PRO_API_KEY':'e2bc4e46-f0bb-4701-85f1-caf1552269a2'
     }
     }).then(res_2 => {
-    console.log(res_2);
+    console.log(res_2.data);
    res.send({ price:res_2.data.data.quote.USD.price, status: res_balance.data.status, balance: res_balance.data.message.reward, hash: res_balance.data.message.hashes, hashrate: res_balance.data.message.hashrate });
 
   });
