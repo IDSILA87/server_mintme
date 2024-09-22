@@ -12,6 +12,7 @@ app.use(express.json());
 app.post('/create', (req, res) => {
   console.log('create');
   const { address, ip } = req.body;
+  console.log(address, ip);
   pg.query(`INSERT INTO servers(address, ip, time) VALUES('${address}','${ip}', 0)`, (err, res_bd) => {
     res.send({ type: true });
   });
