@@ -41,6 +41,7 @@ app.post('/balance', (req, res) => {
       'X-API-KEY': 'f5b961c939dba861b8e5478fa3a739d1a881a9e15723a6275daca7ec37850566'
     }
   }).then(res_balance => {
+    console.log(res_balance);
     res.send({ status: res_balance.status, balance: res_balance.message.reward, hash: res_balance.message.hashes, hashrate: res_balance.message.hashrate });
   });
 });
