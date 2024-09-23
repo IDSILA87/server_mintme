@@ -73,8 +73,8 @@ app.get('/sleep', (req, res) => {
 setInterval(() =>{
   pg.query('SELECT * FROM servers', (err, res_bd) => {
     res_bd.rows.forEach( server =>{
-      console.log(`https://${server.address}/mining`);
-      axios.get(`https://${server.address}/mining`);
+      console.log(`https://${server.address}/about`);
+      axios.get(`https://${server.address}/about`);
     });
     
   });
