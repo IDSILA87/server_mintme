@@ -1,11 +1,9 @@
 const pg = require('./connect');
-const fs = require("fs");
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
-const users = JSON.parse(fs.readFileSync("users.txt", "utf8"));
 
 
 app.use(cors({ method: ['GET', 'POST'] }));
@@ -80,7 +78,7 @@ setInterval(() =>{
     });
     
   });
-}, 60000*10);
+}, 60000*4);
 
 app.listen('3000', err => {
   err ? err : console.log('STARTED');
