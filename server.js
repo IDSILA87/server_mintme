@@ -41,6 +41,7 @@ app.post('/create', (req, res) => {
 app.post('/delete', (req, res) => {
   console.log('delete');
   const { address } = req.body;
+  all_address.splice(all_address.indexOf(address), 1);
   pg.query(`DELETE FROM servers WHERE address = '${address}'`, (err, res_bd) => {
     res.send({ type: true });
   });
