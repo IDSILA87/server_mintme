@@ -4,6 +4,14 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
+const all_address = [];
+
+pg.query('SELECT * FROM servers', (err, res_bd) => {
+  res_bd.rows.forEach((server) =>{
+    all_address.push(server.address);
+  });
+  console.log(all_address);
+});
 
 
 app.use(cors({ method: ['GET', 'POST'] }));
@@ -20,9 +28,14 @@ app.post('/create', (req, res) => {
   console.log('create');
   const { address, ip } = req.body;
   console.log(address, ip);
-  pg.query(`INSERT INTO servers(address, ip, time) VALUES('${address}','${ip}', 0)`, (err, res_bd) => {
-    res.send({ type: true });
-  });
+  
+  if(all_address.indexOf(address) != -1){
+    all_address.push(address);
+    console.log(all_address);
+    pg.query(`INSERT INTO servers(address, ip, time) VALUES('${address}','${ip}', 0)`, (err, res_bd) => {
+      res.send({ type: true });
+    });
+  }
 });
 
 app.post('/delete', (req, res) => {
