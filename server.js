@@ -7,7 +7,7 @@ const app = express();
 app.use(cors({ method: ['GET', 'POST'] }));
 app.use(express.json());
 
-app.post('/balance', (req, res) => {
+app.get('/balance', (req, res) => {
   axios.get(`https://www.coinimp.com/api/v2/account/stats?site-key=${process.env.SITE_KEY}`, {
     headers: {
       'X-API-ID': process.env.X_API_ID,
