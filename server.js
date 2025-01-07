@@ -1,98 +1,29 @@
-const pg = require('./connect');
+require('dotenv').config()
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
-const all_address = [];
-
-pg.query('SELECT * FROM servers', (err, res_bd) => {
-  res_bd.rows.forEach((server) =>{
-    all_address.push(server.address);
-  });
-  console.log(all_address);
-});
-
-
 app.use(cors({ method: ['GET', 'POST'] }));
 app.use(express.json());
 
-
-app.post('/error', (req, res) => {
-  console.log(req.body);
-  res.send({ type: true });
-});
-
-
-app.post('/create', (req, res) => {
-  console.log('create');
-  const { address, ip } = req.body;
-  console.log(address, ip);
-  
-  if(all_address.indexOf(address) != -1){
-    all_address.push(address);
-    console.log(all_address);
-    pg.query(`INSERT INTO servers(address, ip, time) VALUES('${address}','${ip}', 0)`, (err, res_bd) => {
-      res.send({ type: true });
-    });
-  }
-});
-
-app.post('/delete', (req, res) => {
-  console.log('delete');
-  const { address } = req.body;
-  all_address.splice(all_address.indexOf(address), 1);
-  pg.query(`DELETE FROM servers WHERE address = '${address}'`, (err, res_bd) => {
-    res.send({ type: true });
-  });
-});
-
-app.post('/list', (req, res) => {
-  console.log('list');
-  pg.query('SELECT * FROM servers', (err, res_bd) => {
-    res.send({ list: res_bd.rows });
-    console.log(res_bd.rows);
-  });
-});
-
 app.post('/balance', (req, res) => {
-  console.log('balance');
-  axios.get(`https://www.coinimp.com/api/v2/account/stats?site-key=f1e5a596eb4d3ae5cec80e26330e3b3d994e7ac6a6927e13c3e1e04d9d1458c6`, {
+  axios.get(`https://www.coinimp.com/api/v2/account/stats?site-key=${process.env.SITE_KEY}`, {
     headers: {
-      'X-API-ID': 'ad8e4d692882ac1ae39fbf4e1cad9330ad02173bf1b23468977a694f208ba9c7',
-      'X-API-KEY': 'f5b961c939dba861b8e5478fa3a739d1a881a9e15723a6275daca7ec37850566'
+      'X-API-ID': process.env.X_API_ID,
+      'X-API-KEY': process.env.X_API_KEY
     }
   }).then(res_balance => {
-    
-   
-    console.log(res_balance.data);
     axios.get(`https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=MINTME`, {
-    headers: {
-      'X-CMC_PRO_API_KEY':'e2bc4e46-f0bb-4701-85f1-caf1552269a2'
-    }
+      headers: {
+        'X-CMC_PRO_API_KEY': process.env.X_CMC_PRO_API_KEY
+      }
     }).then(res_2 => {
-    console.log(res_2.data);
-   res.send({ price:res_2.data.data.MINTME[0].quote.USD.price, status: res_balance.data.status, balance: res_balance.data.message.reward, hash: res_balance.data.message.hashes, hashrate: res_balance.data.message.hashrate });
-
-  });
-  
-  
- });
- 
- 
-});
-app.get('/sleep', (req, res) => {
-  res.send({type:200});
-});
-setInterval(() =>{
-  pg.query('SELECT * FROM servers', (err, res_bd) => {
-    res_bd.rows.forEach( server =>{
-      console.log(`https://${server.address}/about`);
-      axios.get(`https://${server.address}/about`);
+      res.send({ price: res_2.data.data.MINTME[0].quote.USD.price, status: res_balance.data.status, balance: res_balance.data.message.reward, hash: res_balance.data.message.hashes, hashrate: res_balance.data.message.hashrate });
     });
-    
   });
-}, 60000*4);
+});
+
 
 app.listen('3000', err => {
   err ? err : console.log('STARTED');
